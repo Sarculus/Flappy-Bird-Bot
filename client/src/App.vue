@@ -1,11 +1,25 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-getattractions()
+
+//GET REQUEST//
+const testvalue = await getattractions()  //TODO: make vue work with await keyword (vue tutorial)
 async function getattractions() {
   let myObject = await fetch("/api/testclass");
   //console.log(myObject)
   let myattractions = await myObject.json();
   console.log(myattractions)
+  return myattractions
+}
+console.log(testvalue)
+
+//POST REQUEST//
+start_bot()  //TODO: make vue work with await keyword (vue tutorial)
+async function start_bot() {
+    const response = await fetch("/api/start_game_bot", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+    })
+    console.log(response.statusText)
 }
 </script>
 
@@ -19,6 +33,7 @@ async function getattractions() {
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
+  <Suspense>{{testvalue}}</Suspense>
 </template>
 
 <style scoped>
