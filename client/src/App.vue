@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+getattractions()
+async function getattractions() {
+  let myObject = await fetch("/api/testclass");
+  //console.log(myObject)
+  let myattractions = await myObject.json();
+  console.log(myattractions)
+}
 </script>
 
 <template>
