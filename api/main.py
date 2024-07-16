@@ -15,6 +15,10 @@ app.add_middleware(
 
 items = ["apple", "melon"]
 
+@app.get("/")
+def root():
+    return {"Hello": "World"}
+
 @app.get("/api")
 def root():
     p1 = TestClass()
@@ -30,6 +34,10 @@ def get_testclass():
 def create_item(item: str):
     items.append(item)
     return items
+
+@app.post("/api/start_game_bot")
+def start_game_bot():
+    print("game bot started")
 
 @app.get("/api/items/{item_id}")
 def get_item(item_id: int) -> str:
