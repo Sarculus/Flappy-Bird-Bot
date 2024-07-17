@@ -13,7 +13,7 @@ async function getattractions() {
 console.log(testvalue)
 
 //POST REQUEST//
-start_bot()  //TODO: make vue work with await keyword (vue tutorial)
+start_bot()
 async function start_bot() {
     const response = await fetch("/api/start_game_bot", {
       method: 'POST',
