@@ -1,7 +1,7 @@
 from PIL import Image, ImageOps
 import mss
 import mss.tools
-# import pyautogui
+import pyautogui
 import time
 import numpy as np
 
