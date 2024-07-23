@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from domain_input import TestClass
+from domain_test_input import TestClass
+
+from domain.main.flappy_bird import FlappyBird
 
 #http://127.0.0.1:8000/docs#/
 app = FastAPI()
@@ -38,6 +40,9 @@ def create_item(item: str):
 @app.post("/api/start_game_bot")
 def start_game_bot():
     print("game bot started")
+    fb = FlappyBird()
+    top_left_x_y_cor = fb.start_game()  # runs only the first time when you start the python script
+    fb.start_gameplay_loop(fb.frame_count, top_left_x_y_cor, fb.pipe_position)
 
 @app.get("/api/items/{item_id}")
 def get_item(item_id: int) -> str:
