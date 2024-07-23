@@ -1,0 +1,16 @@
+image: python:3.8
+
+stages:
+  - sample-stage
+
+sample-job:
+  stage: sample-stage
+  before_script:
+    - pip install pytest
+    - pip install Pillow
+    - pip install mss
+#    - pip install pyautogui
+    - pip install numpy
+  script:
+    - echo "Hello World"
+    - pytest tests/test_flappy_bird.py
