@@ -13,4 +13,4 @@ sample-job:
     - pip install numpy
   script:
     - echo "Hello World"
-    - pytest tests/test_flappy_bird.py
+    - pytest domain/tests/test_flappy_bird.py
