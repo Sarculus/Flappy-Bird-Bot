@@ -1,5 +1,4 @@
-import pytest
-from domain.main.flappy_bird import FlappyBird
+from domain.source.flappy_bird import FlappyBird
 
 
 class TestFlappyBird:
