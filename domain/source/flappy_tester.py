@@ -99,7 +99,7 @@ class FlappyBird:
         print('go up')
         #pyautogui.leftClick()
         self.click()
-        time.sleep(0.20)
+        time.sleep(0.25)
 
     def go_down(self):
         print('go down')
