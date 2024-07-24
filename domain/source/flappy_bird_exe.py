@@ -1,4 +1,4 @@
-from flappy_bird import FlappyBird
+from flappy_tester import FlappyBird
 
 fb = FlappyBird()
 top_left_x_y_cor = fb.start_game()  # runs only the first time when you start the python script
