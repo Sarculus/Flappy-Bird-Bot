@@ -34,7 +34,7 @@ cd api
 ```
 Run the Uvicorn server:
 ```
-uvicorn main:app --reload
+uvicorn domain.api.main:app --reload
 ```
 ***
 
