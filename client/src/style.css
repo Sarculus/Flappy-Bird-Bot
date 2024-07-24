@@ -59,3 +59,53 @@ button {
   /*padding: 2rem;*/
   /*text-align: center;*/
 }
+
+/*------------------------------------------------------------*/
+h1 {
+  margin: 0px;
+  padding: 0px;
+}
+
+.nav-wrapper {
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background-color: #b8f0fb;
+  justify-content: space-between;
+  padding: 11px;
+  display: flex;
+}
+
+.nav-buttons-wrapper {
+  grid-column-gap: 30px;
+  grid-row-gap: 36px;
+  background-color: rgba(33, 255, 0, 0.26);
+  border-radius: 200px;
+  margin: 12px;
+  padding: 10px 20px;
+  display: flex;
+}
+
+.nav-button {
+  /*color: #ffffff;*/
+  color: #c5ffc5;
+  background-color: rgba(148, 63, 63, 0); font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  color: #ffdddd;
+}
+
+.nav-button:active {
+  color: #ff6060;
+}
+
+/*.nav-button:focus {*/
+/*  color: #001975;*/
+/*}*/
+
+.main-page-wrapper {
+  padding: 19px;
+  background-color: transparent;
+}

@@ -1,8 +1,8 @@
-async function getattractions() {
-    let myObject = await fetch("/");
-    let myattractions = await myObject.json();
-    console.log(myattractions)
-}
+// async function getattractions() {
+//     let myObject = await fetch("/");
+//     let myattractions = await myObject.json();
+//     console.log(myattractions)
+// }
 
 // async function place_order() {
 //     const response = await fetch("api/placeorder", {
