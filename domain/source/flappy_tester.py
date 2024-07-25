@@ -47,11 +47,11 @@ class FlappyBird:
                     t = Timer(0.0, self.go_down)
                     t.start()  # method will execute after x seconds independent of the main thread
                     #self.go_down()  # self.go_steady()
-                elif bird_position < pipe_position_top + 100:  # 70top 110bottom seems good value
+                elif bird_position < pipe_position_top + 94:  # 70top 110bottom seems good value, (100, 160)
                     t = Timer(0.0, self.go_down)
                     t.start()  # method will execute after x seconds independent of the main thread
                     # self.go_down()
-                elif bird_position > pipe_position_top + 160:  # 180 is pipe gap in pixels
+                elif bird_position > pipe_position_top + 190:  # 180 is pipe gap in pixels
                     t = Timer(0.0, self.go_up)
                     t.start()  # method will execute after x seconds independent of the main thread
                     #self.go_up()
@@ -98,8 +98,9 @@ class FlappyBird:
     def go_up(self):
         print('go up')
         #pyautogui.leftClick()
+        # time.sleep(0.01)  # temp as a test
         self.click()
-        time.sleep(0.25)
+        time.sleep(0.30)  #0.35 0.30 0.25
 
     def go_down(self):
         print('go down')
@@ -111,7 +112,7 @@ class FlappyBird:
         print('go steady')
         #pyautogui.leftClick()
         self.click()
-        time.sleep(0.40)
+        time.sleep(0.48)  #0.50 0.45 0.40
 
     def update_saved_screen(self, count, game_cor):
         img_name = '../images/screen{0}.png'.format(count)
@@ -154,7 +155,7 @@ class FlappyBird:
         frame = Image.open('../images/screen{0}.png'.format(count))
         #frame = Image.open('./screen.png')  # opening latest screenshot from the image file
 
-        origin_x = 400 #420 #390 #499  # top left corner of the image section
+        origin_x = 385 #375 380 420 #390 #499  # top left corner of the image section
         origin_y = 0  # top left corner of the image section
         size_x = 1  # section width
         size_y = 600  # section height

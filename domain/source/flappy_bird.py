@@ -10,6 +10,7 @@ import win32api
 import win32con
 from threading import Timer
 
+#TODO: variables: sleeptime of each click method, cusion distance between pipe, x cordinate of polling pixel line for a new pipe
 
 class FlappyBird:
     frame_count = 0
@@ -41,15 +42,24 @@ class FlappyBird:
             if pipe_position_update != 0:
                 pipe_position_top = pipe_position_update
             print(bird_position, pipe_position_top, pipe_position_top + 180)
-            if pipe_position_top == -1 or bird_position == -1:
-                self.go_down()  # self.go_steady()
-            elif bird_position < pipe_position_top:
-                self.go_down()
-            elif bird_position > pipe_position_top + 180:  # 180 is pipe gap in pixels
-                self.go_up()
-            else:
-                self.go_steady()
-            print("--------------------------")
+            if threading.active_count() == 1:  # Only click when the previous click thread is finished
+                if pipe_position_top == -1 or bird_position == -1:
+                    t = Timer(0.0, self.go_down)
+                    t.start()  # method will execute after x seconds independent of the main thread
+                    #self.go_down()  # self.go_steady()
+                elif bird_position < pipe_position_top + 94:  # 70top 110bottom seems good value, (100, 160)
+                    t = Timer(0.0, self.go_down)
+                    t.start()  # method will execute after x seconds independent of the main thread
+                    # self.go_down()
+                elif bird_position > pipe_position_top + 190:  # 180 is pipe gap in pixels
+                    t = Timer(0.0, self.go_up)
+                    t.start()  # method will execute after x seconds independent of the main thread
+                    #self.go_up()
+                else:
+                    t = Timer(0.0, self.go_steady)
+                    t.start()  # method will execute after x seconds independent of the main thread
+                    #self.go_steady()
+                print("--------------------------thread started")
 
     def find_game_frame_area(self):
         with mss.mss() as sct:
@@ -83,23 +93,26 @@ class FlappyBird:
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
         # time.sleep(0.01)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+        print('-----------------------------clicked')
 
     def go_up(self):
-        #time.sleep(0.10)
         print('go up')
         #pyautogui.leftClick()
+        # time.sleep(0.01)  # temp as a test
         self.click()
+        time.sleep(0.30)  #0.35 0.30 0.25
 
     def go_down(self):
-        #time.sleep(0.30)
         print('go down')
         #pyautogui.leftClick()
+        # self.click()
+        # time.sleep(0.40)
 
     def go_steady(self):
-        #time.sleep(0.25)
         print('go steady')
         #pyautogui.leftClick()
         self.click()
+        time.sleep(0.48)  #0.50 0.45 0.40
 
     def update_saved_screen(self, count, game_cor):
         img_name = '../images/screen{0}.png'.format(count)
@@ -142,7 +155,7 @@ class FlappyBird:
         frame = Image.open('../images/screen{0}.png'.format(count))
         #frame = Image.open('./screen.png')  # opening latest screenshot from the image file
 
-        origin_x = 390 #499  # top left corner of the image section
+        origin_x = 385 #375 380 420 #390 #499  # top left corner of the image section
         origin_y = 0  # top left corner of the image section
         size_x = 1  # section width
         size_y = 600  # section height
