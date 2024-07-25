@@ -34,13 +34,11 @@ class FlappyBird:
         while True:
             self.update_saved_screen(frame_count, top_left_x_y_cor)
             self.check_end_game(frame_count)
-            self.crop_bird_area(frame_count)
-            self.crop_pipe_area(frame_count)
-            frame_count += 1
-            bird_position = self.get_bird_position() + 15  # bird head to centre is 15 px
-            pipe_position_update = self.get_pipe_position()  # + 90  #half of pipe gape is 90 px
-            if pipe_position_update != 0:
+            bird_position = self.get_bird_position(frame_count) + 15  # bird head to centre is 15 px
+            pipe_position_update = self.get_pipe_position(frame_count)  # + 90  #half of pipe gape is 90 px
+            if pipe_position_update != 0 and (self.bird_not_in_pipe(frame_count)):
                 pipe_position_top = pipe_position_update
+            frame_count += 1
             print(bird_position, pipe_position_top, pipe_position_top + 180)
             if threading.active_count() == 1:  # Only click when the previous click thread is finished
                 if pipe_position_top == -1 or bird_position == -1:
@@ -140,33 +138,15 @@ class FlappyBird:
             # time.sleep(1.2)
             # start_game()
 
-    def crop_bird_area(self, count):
+    def get_bird_position(self, count):
         frame = Image.open('../images/screen{0}.png'.format(count))  # opening latest screenshot from the image file
 
         origin_x = 142  # top left corner of the image section
         origin_y = 0  # top left corner of the image section
         size_x = 1  # section width
         size_y = 600  # section height
-
         image_section_bird = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
-        image_section_bird.save('../images/cropped_screen_bird.png')
-
-    def crop_pipe_area(self, count):
-        frame = Image.open('../images/screen{0}.png'.format(count))
-        #frame = Image.open('./screen.png')  # opening latest screenshot from the image file
-
-        origin_x = 385 #375 380 420 #390 #499  # top left corner of the image section
-        origin_y = 0  # top left corner of the image section
-        size_x = 1  # section width
-        size_y = 600  # section height
-
-        image_section_pipe = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
-        image_section_pipe.save('../images/cropped_screen_pipe.png')
-
-    def get_bird_position(self):
-        frame = Image.open('../images/cropped_screen_bird.png')
-
-        gray_frame = ImageOps.grayscale(frame)
+        gray_frame = ImageOps.grayscale(image_section_bird)
         image_pixel_values = np.array(gray_frame.getdata())  # turn into an array of rgb numbers (0-255)
 
         bird_position = -1
@@ -177,10 +157,16 @@ class FlappyBird:
 
         return bird_position
 
-    def get_pipe_position(self):
-        frame = Image.open('../images/cropped_screen_pipe.png')
+    def get_pipe_position(self, count):
+        frame = Image.open('../images/screen{0}.png'.format(count))
+        #frame = Image.open('./screen.png')  # opening latest screenshot from the image file
 
-        gray_frame = ImageOps.grayscale(frame)
+        origin_x = 385 #375 380 420 #390 #499  # top left corner of the image section
+        origin_y = 0  # top left corner of the image section
+        size_x = 1  # section width
+        size_y = 600  # section height
+        image_section_pipe = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
+        gray_frame = ImageOps.grayscale(image_section_pipe)
         image_pixel_values = np.array(gray_frame.getdata())  # turn into an array of rgb numbers (0-255)
 
         pipe_position = -1
@@ -190,3 +176,17 @@ class FlappyBird:
                 break
 
         return pipe_position
+
+    def bird_not_in_pipe(self, count):
+        frame = Image.open('../images/screen{0}.png'.format(count))
+
+        origin_x = 142
+        origin_y = 0
+        size_x = 1
+        size_y = 1
+        image_section_pipe = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
+        gray_frame = ImageOps.grayscale(image_section_pipe)
+        image_pixel_value = np.array(gray_frame.getdata())
+        if image_pixel_value == 176:
+            return True
+        return False
