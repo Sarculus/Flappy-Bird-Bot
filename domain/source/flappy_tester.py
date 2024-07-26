@@ -3,11 +3,11 @@ from threading import Timer
 from PIL import Image, ImageOps
 import mss
 import mss.tools
-# import pyautogui
+import pyautogui
 import time
 import numpy as np
-# import win32api
-# import win32con
+import win32api
+import win32con
 
 #TODO: variables: sleeptime of each click method, cusion distance between pipe, x cordinate of polling pixel line for a new pipe
 
