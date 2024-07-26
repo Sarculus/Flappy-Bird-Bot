@@ -2,6 +2,9 @@
 
 ## Dependencies
 ### Client
+Vue
+Vite
+
 ```
 pip install fastAPI
 ```
@@ -10,6 +13,16 @@ Run the Vite server:
 pip install fastAPI
 ```
 ### Domain
+import threading
+from threading import Timer
+from PIL import Image, ImageOps
+import mss
+import mss.tools
+import pyautogui
+import time
+import numpy as np
+import win32api
+import win32con
 ```
 pip install fastAPI
 ```
