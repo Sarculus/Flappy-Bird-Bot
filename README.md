@@ -86,6 +86,9 @@ The goal of the project is to create a gameplay bot, specifically for the game F
 - Database: Redis
 ***
 
+##Project Structure
+![test image](https://www.visual-paradigm.com/servlet/editor-content/tutorials/flowchart-tutorial/sites/7/2018/09/flowchart-example.png)
+
 ## Personal Learning Goals
 - Keeping track of issues and planning using the issue board in Gitlab
 - Defining a proper scope for the project, not too big, not too small
