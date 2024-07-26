@@ -15,4 +15,5 @@ sample-job:
 
   script:
     - echo "Hello World"
-    - pytest domain/tests/test_flappy_bird.py
+    - cd domain/tests
+    - pytest ./test_flappy_bird.py

@@ -6,7 +6,7 @@ class TestFlappyBird:
         self.fb = FlappyBird()
 
     def test_find_game_frame_area(self):
-        top_left_x_y_cor = self.fb.find_game_frame_area('/domain/tests/test_images/main_screen.png')
+        top_left_x_y_cor = self.fb.find_game_frame_area('../tests/test_images/main_screen.png')
         assert top_left_x_y_cor == (502, 214)
 
     def test_check_end_game(self):
