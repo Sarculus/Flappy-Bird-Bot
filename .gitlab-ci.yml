@@ -11,7 +11,7 @@ sample-job:
     - pip install mss
 #    - pip install pyautogui
     - pip install numpy
-    - pip install pywin32
+#    - pip install pywin32
 
   script:
     - echo "Hello World"
