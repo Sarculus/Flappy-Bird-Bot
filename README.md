@@ -87,6 +87,8 @@ The goal of the project is to create a gameplay bot, specifically for the game F
 ***
 
 ##Project Structure
+
+[](https://www.visual-paradigm.com/servlet/editor-content/tutorials/flowchart-tutorial/sites/7/2018/09/flowchart-example.png)
 ![test image](https://www.visual-paradigm.com/servlet/editor-content/tutorials/flowchart-tutorial/sites/7/2018/09/flowchart-example.png)
 
 ## Personal Learning Goals
