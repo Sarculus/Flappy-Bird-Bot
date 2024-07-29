@@ -55,7 +55,7 @@ class FlappyBird:
         elif bird_position < pipe_position_top + 94:  # 70top 110bottom seems good value, (100, 160)
             t = Timer(0.0, self.go_down)
             t.start()  # method will execute after x seconds independent of the main thread
-        elif bird_position > pipe_position_top + 180:  # 180 is pipe gap in pixels
+        elif bird_position > pipe_position_top + 190:  # 180 is pipe gap in pixels
             self.click()
             t = Timer(0.0, self.go_up)
             t.start()  # method will execute after x seconds independent of the main thread
@@ -106,7 +106,7 @@ class FlappyBird:
         #pyautogui.leftClick()
         # time.sleep(0.01)  # temp as a test
         #self.click()
-        time.sleep(0.28)  #0.35 0.30 0.25
+        time.sleep(0.30)  #0.35 0.30 0.25
 
     def go_down(self):
         print('go down')
@@ -118,7 +118,7 @@ class FlappyBird:
         print('go steady')
         #pyautogui.leftClick()
         #self.click()
-        time.sleep(0.50)  #0.50 0.45 0.40
+        time.sleep(0.48)  #0.50 0.45 0.40
 
     def update_saved_screen(self, count, game_cor):
         img_name = '../images/screen{0}.png'.format(count)
@@ -184,7 +184,7 @@ class FlappyBird:
     def bird_not_in_pipe(self, image_path):
         frame = Image.open(image_path)
 
-        origin_x = 155  # 142
+        origin_x = 142  # 142
         origin_y = 0
         size_x = 1
         size_y = 1
