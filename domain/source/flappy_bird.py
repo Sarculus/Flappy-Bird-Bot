@@ -14,6 +14,7 @@ import win32con
 class FlappyBird:
     frame_count = 0
     pipe_position = -1
+    bird_position = 295
 
     def __init__(self):
         pass
@@ -29,7 +30,7 @@ class FlappyBird:
         pyautogui.leftClick()
         return top_left_x_y_cor
 
-    def start_gameplay_loop(self, frame_count, top_left_x_y_cor, pipe_position_top):
+    def start_gameplay_loop(self, frame_count, top_left_x_y_cor, pipe_position_top, old_bird_position):
         while True:
             self.update_saved_screen(frame_count, top_left_x_y_cor)
             image_path = '../images/screen{0}.png'.format(frame_count)
@@ -39,23 +40,29 @@ class FlappyBird:
                 exit()
                 # time.sleep(2.0)
                 # self.start_game()
-            bird_position = self.get_bird_position(image_path) + 15  # bird head to centre is 15 px
+            new_bird_position = self.get_bird_position(image_path) + 15  # bird head to centre is 15 px
+            bird_speed = new_bird_position - old_bird_position  # positive when going down
+            old_bird_position = new_bird_position
             pipe_position_update = self.get_pipe_position(image_path)  # + 90  #half of pipe gape is 90 px
             if pipe_position_update != 0 and (self.bird_not_in_pipe(image_path)):
                 pipe_position_top = pipe_position_update
             frame_count += 1
-            print(bird_position, pipe_position_top, pipe_position_top + 180)
+            print(new_bird_position, pipe_position_top, pipe_position_top + 180, bird_speed)
+            # if bird_speed > 50:
+            #     print("speed click!!!")
+            #     print("--------------------------------------")
+            #     self.click()
             if threading.active_count() == 1:  # Only click when the previous click thread is finished
-                self.do_a_click_action(bird_position, pipe_position_top)
+                self.do_a_click_action(new_bird_position, pipe_position_top)
 
     def do_a_click_action(self, bird_position, pipe_position_top):
         if pipe_position_top == -1 or bird_position == -1:  # TODO: extra flap when large distance to cover?
             t = Timer(0.0, self.go_down)
             t.start()  # method will execute after x seconds independent of the main thread
-        elif bird_position < pipe_position_top + 94:  # 70top 110bottom seems good value, (100, 160)
+        elif bird_position < pipe_position_top + 98:  # 70top 110bottom seems good value, (100, 160)
             t = Timer(0.0, self.go_down)
             t.start()  # method will execute after x seconds independent of the main thread
-        elif bird_position > pipe_position_top + 190:  # 180 is pipe gap in pixels
+        elif bird_position > pipe_position_top + 191:  # 180 is pipe gap in pixels
             self.click()
             t = Timer(0.0, self.go_up)
             t.start()  # method will execute after x seconds independent of the main thread
@@ -63,7 +70,7 @@ class FlappyBird:
             self.click()
             t = Timer(0.0, self.go_steady)
             t.start()  # method will execute after x seconds independent of the main thread
-        print("--------------------------thread started")
+        print("-----------thread started")
 
     def make_screenshot(self):
         with mss.mss() as sct:
@@ -99,14 +106,14 @@ class FlappyBird:
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
         # time.sleep(0.01)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
-        print('-----------------------------clicked')
+        print('------------clicked')
 
     def go_up(self):
         print('go up')
         #pyautogui.leftClick()
         # time.sleep(0.01)  # temp as a test
         #self.click()
-        time.sleep(0.30)  #0.35 0.30 0.25
+        time.sleep(0.26)  #0.35 0.30 0.25
 
     def go_down(self):
         print('go down')
@@ -118,7 +125,7 @@ class FlappyBird:
         print('go steady')
         #pyautogui.leftClick()
         #self.click()
-        time.sleep(0.48)  #0.50 0.45 0.40
+        time.sleep(0.49)  #0.50 0.45 0.40
 
     def update_saved_screen(self, count, game_cor):
         img_name = '../images/screen{0}.png'.format(count)
@@ -184,7 +191,7 @@ class FlappyBird:
     def bird_not_in_pipe(self, image_path):
         frame = Image.open(image_path)
 
-        origin_x = 142  # 142
+        origin_x = 155  # 142
         origin_y = 0
         size_x = 1
         size_y = 1
