@@ -2,34 +2,26 @@
 
 ## Dependencies
 ### Client
-Vue
-Vite
-
+Install dependencies:
 ```
-pip install fastAPI
-```
-Run the Vite server:
-```
-pip install fastAPI
+cd client
+npm install
 ```
 ### Domain
-import threading
-from threading import Timer
-from PIL import Image, ImageOps
-import mss
-import mss.tools
-import pyautogui
-import time
-import numpy as np
-import win32api
-import win32con
+Install libraries:
+
 ```
-pip install fastAPI
+pip install Pillow
+pip install numpy
+pip install mss
+pip install pywin32
+pip install pyautogui
 ```
-Run the Uvicorn server:
+install FastAPI and Uvicorn:
 ```
-pip install fastAPI
+pip install fastapi
 ```
+Make sure to install to the correct path. If installed to an alternative path make sure to add this path to the windows environment variables (system and user)
 ***
 
 ## Build Commands
@@ -42,9 +34,6 @@ Run the Vite server:
 npm run dev
 ```
 ### Domain
-```
-cd api
-```
 Run the Uvicorn server:
 ```
 uvicorn domain.api.main:app --reload
