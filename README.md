@@ -1,5 +1,13 @@
 # Personal IP
 
+CI/CD status:
+
+[![pipeline status](https://git.sogyo.nl/rkeijzer/personal-ip/badges/main/pipeline.svg)](https://git.sogyo.nl/rkeijzer/personal-ip/-/commits/main)
+
+[![coverage report](https://git.sogyo.nl/rkeijzer/personal-ip/badges/main/coverage.svg)](https://git.sogyo.nl/rkeijzer/personal-ip/-/commits/main)
+
+
+
 ## Dependencies
 ### Client
 Install dependencies:
