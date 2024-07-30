@@ -15,7 +15,6 @@ pip install Pillow
 pip install numpy
 pip install mss
 pip install pywin32
-pip install pyautogui
 ```
 install FastAPI and Uvicorn:
 ```
@@ -26,11 +25,9 @@ Make sure to install to the correct path. If installed to an alternative path ma
 
 ## Build Commands
 ### Client
-```
-cd client
-```
 Run the Vite server:
 ```
+cd client
 npm run dev
 ```
 ### Domain
