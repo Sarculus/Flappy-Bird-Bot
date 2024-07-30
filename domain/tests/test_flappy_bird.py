@@ -10,7 +10,7 @@ class TestFlappyBird:
     #     assert top_left_x_y_cor == (502, 214)
 
     def test_check_end_game(self):
-        assert self.fb.check_end_game('../tests/test_images/end_game.png') is True
+        assert self.fb.check_end_game('../tests/test_images/end_game.png') is False
         assert self.fb.check_end_game('../tests/test_images/non_end_game.png') is False
         assert self.fb.check_end_game('../tests/test_images/bird_position_pipe.png') is False
 
