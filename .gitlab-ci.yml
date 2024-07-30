@@ -12,7 +12,7 @@ unit-test-job:
     - pip install Pillow
     - pip install mss
     - pip install numpy
-    - pip install pywin32
+    - pip install pypiwin32
 
   script:
     - echo "Hello World"
