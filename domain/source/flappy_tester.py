@@ -3,17 +3,19 @@ from threading import Timer
 from PIL import Image, ImageOps
 import mss
 import mss.tools
-import pyautogui
 import time
 import numpy as np
 import win32api
 import win32con
+from win32api import GetSystemMetrics
+
 
 #TODO: variables: sleeptime of each click method, cusion distance between pipe, x cordinate of polling pixel line for a new pipe
 
 class FlappyBird:
     frame_count = 0
     pipe_position = -1
+
     bird_position = 295
 
     def __init__(self):
@@ -23,11 +25,16 @@ class FlappyBird:
     def start_game(self):
         self.make_screenshot()
         top_left_x_y_cor = self.find_game_frame_area('../images/main_screen.png')
-        # pyautogui.click((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 480))
+        # win32api.SetCursorPos((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 480))
+        # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
         # time.sleep(0.3)
-        pyautogui.click((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 550))
+        win32api.SetCursorPos((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 550))
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
         time.sleep(0.3)
-        pyautogui.leftClick()
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
         return top_left_x_y_cor
 
     def start_gameplay_loop(self, frame_count, top_left_x_y_cor, pipe_position_top, old_bird_position):
@@ -48,21 +55,30 @@ class FlappyBird:
                 pipe_position_top = pipe_position_update
             frame_count += 1
             print(new_bird_position, pipe_position_top, pipe_position_top + 180, bird_speed)
-            # if bird_speed > 50:
+            # if bird_speed > 50:  #TODO: if avereage speed of certain value then do a click
             #     print("speed click!!!")
             #     print("--------------------------------------")
             #     self.click()
+            if self.bird_0_to_30_from_bottom_pipe_and_going_down(bird_speed, new_bird_position, pipe_position_top):
+                self.click()
+                print("position click!!!")
+                print("--------------------------------------")
             if threading.active_count() == 1:  # Only click when the previous click thread is finished
                 self.do_a_click_action(new_bird_position, pipe_position_top)
+
+    def bird_0_to_30_from_bottom_pipe_and_going_down(self, bird_speed, new_bird_position, pipe_position_top):
+        if pipe_position_top + 150 < new_bird_position < pipe_position_top + 180 and bird_speed > 5:
+            return True
+        return False
 
     def do_a_click_action(self, bird_position, pipe_position_top):
         if pipe_position_top == -1 or bird_position == -1:  # TODO: extra flap when large distance to cover?
             t = Timer(0.0, self.go_down)
             t.start()  # method will execute after x seconds independent of the main thread
-        elif bird_position < pipe_position_top + 98:  # 70top 110bottom seems good value, (100, 160)
+        elif bird_position < pipe_position_top + 100:  # 70top 110bottom seems good value, (100, 160)
             t = Timer(0.0, self.go_down)
             t.start()  # method will execute after x seconds independent of the main thread
-        elif bird_position > pipe_position_top + 191:  # 180 is pipe gap in pixels
+        elif bird_position > pipe_position_top + 192:  # 180 is pipe gap in pixels
             self.click()
             t = Timer(0.0, self.go_up)
             t.start()  # method will execute after x seconds independent of the main thread
@@ -79,7 +95,8 @@ class FlappyBird:
 
     def find_game_frame_area(self, image_path):
         main_screen = Image.open(image_path)
-        screen_resolution = pyautogui.size()
+        screen_resolution = [GetSystemMetrics(0), GetSystemMetrics(1)]
+        print(screen_resolution)
         origin_x = int(screen_resolution[0] / 2)
         origin_y = int(screen_resolution[1] / 2)
         x_gamescreen = main_screen.crop((0, origin_y, screen_resolution[0], origin_y + 1))
@@ -191,7 +208,7 @@ class FlappyBird:
     def bird_not_in_pipe(self, image_path):
         frame = Image.open(image_path)
 
-        origin_x = 155  # 142
+        origin_x = 154  # 142
         origin_y = 0
         size_x = 1
         size_y = 1
