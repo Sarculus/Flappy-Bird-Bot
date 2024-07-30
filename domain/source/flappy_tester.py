@@ -24,7 +24,8 @@ class FlappyBird:
 
     def start_game(self):
         self.make_screenshot()
-        top_left_x_y_cor = self.find_game_frame_area('../images/main_screen.png')
+        screen_resolution = [GetSystemMetrics(0), GetSystemMetrics(1)]
+        top_left_x_y_cor = self.find_game_frame_area('../images/main_screen.png', screen_resolution)
         # win32api.SetCursorPos((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 480))
         # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
         # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
@@ -93,10 +94,8 @@ class FlappyBird:
             sct.shot(output="../images/main_screen.png")  # taking a screenshot and saving it to an image file
 
 
-    def find_game_frame_area(self, image_path):
+    def find_game_frame_area(self, image_path, screen_resolution):
         main_screen = Image.open(image_path)
-        screen_resolution = [GetSystemMetrics(0), GetSystemMetrics(1)]
-        print(screen_resolution)
         origin_x = int(screen_resolution[0] / 2)
         origin_y = int(screen_resolution[1] / 2)
         x_gamescreen = main_screen.crop((0, origin_y, screen_resolution[0], origin_y + 1))
