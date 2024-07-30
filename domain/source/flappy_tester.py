@@ -52,12 +52,17 @@ class FlappyBird:
             #     print("speed click!!!")
             #     print("--------------------------------------")
             #     self.click()
-            if pipe_position_top + 150 < new_bird_position < pipe_position_top + 180 and bird_speed > 5:
+            if self.bird_0_to_30_from_bottom_pipe_and_going_down(bird_speed, new_bird_position, pipe_position_top):
                 self.click()
                 print("position click!!!")
                 print("--------------------------------------")
             if threading.active_count() == 1:  # Only click when the previous click thread is finished
                 self.do_a_click_action(new_bird_position, pipe_position_top)
+
+    def bird_0_to_30_from_bottom_pipe_and_going_down(self, bird_speed, new_bird_position, pipe_position_top):
+        if pipe_position_top + 150 < new_bird_position < pipe_position_top + 180 and bird_speed > 5:
+            return True
+        return False
 
     def do_a_click_action(self, bird_position, pipe_position_top):
         if pipe_position_top == -1 or bird_position == -1:  # TODO: extra flap when large distance to cover?

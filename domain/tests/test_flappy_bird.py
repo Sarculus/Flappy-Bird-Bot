@@ -28,5 +28,12 @@ class TestFlappyBird:
         assert self.fb.bird_not_in_pipe('../tests/test_images/all_sky.png') is True
         assert self.fb.bird_not_in_pipe('../tests/test_images/all_pipe.png') is False
 
+    def test_bird_0_to_30_from_bottom_pipe_and_going_down(self):
+        assert self.fb.bird_0_to_30_from_bottom_pipe_and_going_down(-1, 458, 298) is False
+        assert self.fb.bird_0_to_30_from_bottom_pipe_and_going_down(1, 458, 298) is False
+        assert self.fb.bird_0_to_30_from_bottom_pipe_and_going_down(6, 480, 298) is False
+        assert self.fb.bird_0_to_30_from_bottom_pipe_and_going_down(6, 445, 298) is False
+        assert self.fb.bird_0_to_30_from_bottom_pipe_and_going_down(6, 458, 298) is True
+
     # def teardown_method(self):  # after each tests
     #     del self.fb  # example, happens automatically
