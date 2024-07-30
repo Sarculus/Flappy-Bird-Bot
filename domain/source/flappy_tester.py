@@ -5,9 +5,9 @@ import mss
 import mss.tools
 import time
 import numpy as np
-import win32api
-import win32con
-from win32api import GetSystemMetrics
+# import win32api
+# import win32con
+# from win32api import GetSystemMetrics
 
 
 #TODO: variables: sleeptime of each click method, cusion distance between pipe, x cordinate of polling pixel line for a new pipe

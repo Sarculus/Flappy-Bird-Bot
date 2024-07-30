@@ -6,12 +6,12 @@ stages:
 sample-job:
   stage: sample-stage
   before_script:
-    - pip install --upgrade pip
+#    - pip install --upgrade pip
     - pip install pytest
     - pip install Pillow
     - pip install mss
     - pip install numpy
-    - pip install pywin32
+#    - pip install pywin32
 
   script:
     - echo "Hello World"
