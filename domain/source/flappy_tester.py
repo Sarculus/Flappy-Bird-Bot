@@ -3,17 +3,19 @@ from threading import Timer
 from PIL import Image, ImageOps
 import mss
 import mss.tools
-import pyautogui
 import time
 import numpy as np
 import win32api
 import win32con
+from win32api import GetSystemMetrics
+
 
 #TODO: variables: sleeptime of each click method, cusion distance between pipe, x cordinate of polling pixel line for a new pipe
 
 class FlappyBird:
     frame_count = 0
     pipe_position = -1
+
     bird_position = 295
 
     def __init__(self):
@@ -23,11 +25,16 @@ class FlappyBird:
     def start_game(self):
         self.make_screenshot()
         top_left_x_y_cor = self.find_game_frame_area('../images/main_screen.png')
-        # pyautogui.click((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 480))
+        # win32api.SetCursorPos((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 480))
+        # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
         # time.sleep(0.3)
-        pyautogui.click((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 550))
+        win32api.SetCursorPos((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 550))
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
         time.sleep(0.3)
-        pyautogui.leftClick()
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
         return top_left_x_y_cor
 
     def start_gameplay_loop(self, frame_count, top_left_x_y_cor, pipe_position_top, old_bird_position):
@@ -88,7 +95,8 @@ class FlappyBird:
 
     def find_game_frame_area(self, image_path):
         main_screen = Image.open(image_path)
-        screen_resolution = pyautogui.size()
+        screen_resolution = [GetSystemMetrics(0), GetSystemMetrics(1)]
+        print(screen_resolution)
         origin_x = int(screen_resolution[0] / 2)
         origin_y = int(screen_resolution[1] / 2)
         x_gamescreen = main_screen.crop((0, origin_y, screen_resolution[0], origin_y + 1))
