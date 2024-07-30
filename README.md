@@ -1,5 +1,13 @@
 # Personal IP
 
+CI/CD status:
+
+[![pipeline status](https://git.sogyo.nl/rkeijzer/personal-ip/badges/main/pipeline.svg)](https://git.sogyo.nl/rkeijzer/personal-ip/-/commits/main)
+
+[![coverage report](https://git.sogyo.nl/rkeijzer/personal-ip/badges/main/coverage.svg)](https://git.sogyo.nl/rkeijzer/personal-ip/-/commits/main)
+
+
+
 ## Dependencies
 ### Client
 Install dependencies:
@@ -74,7 +82,8 @@ The goal of the project is to create a gameplay bot, specifically for the game F
 
 ## Project Structure
 <!-- ![test image](architecture_diagram.png) -->
-<img src="architecture_diagram.png"  width="600" height="120">
+<!-- <img src="architecture_diagram.png"  width="600" height="120"> -->
+<img src="uml_stack_diagram.png"  width="600" height="120">
 
 ## Personal Learning Goals
 - Keeping track of issues and planning using the issue board in Gitlab
