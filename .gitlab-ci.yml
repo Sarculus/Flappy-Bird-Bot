@@ -1,10 +1,11 @@
 image: python:3.12
 
 stages:
-  - sample-stage
+  - unit-test
+  - code-coverage
 
-sample-job:
-  stage: sample-stage
+unit-test-job:
+  stage: unit-test
   before_script:
 #    - pip install --upgrade pip
     - pip install pytest
@@ -17,3 +18,23 @@ sample-job:
     - echo "Hello World"
     - cd domain/tests
     - pytest ./test_flappy_bird.py
+
+
+code-coverage-job:
+  stage: code-coverage
+  before_script:
+    - pip install pytest pytest-cov
+    - pytest --cov --cov-report term --cov-report xml:coverage.xml
+    - pip install Pillow
+    - pip install mss
+    - pip install numpy
+#    - pip install pywin32
+
+  script:
+    - echo "Hello World"
+
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
