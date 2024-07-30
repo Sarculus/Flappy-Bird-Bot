@@ -31,6 +31,7 @@ code-coverage-job:
 
   script:
     - echo "Hello World"
+    - cd domain/tests
     - pytest --cov --cov-report term --cov-report xml:coverage.xml
 
   artifacts:
