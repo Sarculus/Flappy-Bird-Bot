@@ -6,8 +6,24 @@ class TestFlappyBird:
         self.fb = FlappyBird()
 
     def test_find_game_frame_area(self):
-        top_left_x_y_cor = self.fb.find_game_frame_area('../tests/test_images/main_screen.png')
-        assert top_left_x_y_cor == (502, 214)
+        # screen_resolution_1 = (1366, 768)
+        screen_resolution_2 = (1600, 900)
+        screen_resolution_3 = (1680, 1050)
+        screen_resolution_4 = (1920, 1080)
+        screen_resolution_5 = (2560, 1440)
+        screen_resolution_6 = (3840, 2160)
+        # top_left_x_y_cor_1 = self.fb.find_game_frame_area('../tests/test_images/main_screen.png', screen_resolution_1)
+        top_left_x_y_cor_2 = self.fb.find_game_frame_area('../tests/test_images/bird_900.png', screen_resolution_2)
+        top_left_x_y_cor_3 = self.fb.find_game_frame_area('../tests/test_images/main_screen.png', screen_resolution_3)
+        top_left_x_y_cor_4 = self.fb.find_game_frame_area('../tests/test_images/bird_1080.png', screen_resolution_4)
+        top_left_x_y_cor_5 = self.fb.find_game_frame_area('../tests/test_images/bird_1440.png', screen_resolution_5)
+        top_left_x_y_cor_6 = self.fb.find_game_frame_area('../tests/test_images/bird_4k.png', screen_resolution_6)
+        # assert top_left_x_y_cor_1 == (443, 140)
+        assert top_left_x_y_cor_2 == (546, 180)
+        assert top_left_x_y_cor_3 == (502, 214)
+        assert top_left_x_y_cor_4 == (666, 260)
+        assert top_left_x_y_cor_5 == (1014, 412)
+        assert top_left_x_y_cor_6 == (1622, 720)
 
     def test_check_end_game(self):
         assert self.fb.check_end_game('../tests/test_images/end_game.png') is True
