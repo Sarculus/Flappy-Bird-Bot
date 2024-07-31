@@ -3,14 +3,14 @@ import { onMounted, ref } from 'vue'
 
 
 //GET REQUEST//
-const testvalue = ref([])
+const flap_highscores = ref([[], []])
 onMounted(async () => {
-  testvalue.value = await getattractions()
+  flap_highscores.value = await getHighscores()
 })
-async function getattractions() {
+async function getHighscores() {
   let myObject = await fetch("/api/testclass");
-  let myattractions = await myObject.json();
-  return myattractions
+  let highscores = await myObject.json();
+  return highscores
 }
 
 //POST REQUEST//
@@ -22,8 +22,15 @@ async function start_bot() {
   console.log(response.statusText)
 }
 
+//POST REQUEST//
+async function stop_bot() {
+  const response = await fetch("/api/stop_game_bot", {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+  })
+  console.log(response.statusText)
+}
 
-const count = ref(0)
 </script>
 
 <template>
@@ -40,15 +47,13 @@ const count = ref(0)
     </div>
     <div class="main-page-wrapper">
       <div class="hero-content-wrapper">
-        <!--        <h1 class="hero-title">Flappy Bird</h1>-->
       </div>
       <div class="game-section-wrapper">
         <div class="left-hero-section-wrapper">
           <div class="left-hero-section-content">
             <h1 class="hero-title">Flappy Bird</h1>
-            <button class="play-button" type="button" @click="start_bot()">Auto Play</button>
-            <div>
-              <Suspense>{{testvalue}}</Suspense>
+            <div class="button-wrapper">
+              <button class="play-button" type="button" @click="start_bot()">Start Auto Play</button>
             </div>
           </div>
         </div>
@@ -56,11 +61,29 @@ const count = ref(0)
                 allowfullscreen="false" src="https://flappybird.gg/game">
         </iframe>
         <div class="right-hero-section-wrapper">
-          <div class="right-hero-section-content"></div>
+          <div class="right-hero-section-content">
+            <h1 class="hero-title">High Scores</h1>
+            <table>
+              <tr>
+                <th class="table-left">#</th>
+                <th>Date</th>
+                <th class="table-right">Score</th>
+              </tr>
+              <tr>
+                <td><Suspense>{{ flap_highscores[0][0] }}</Suspense></td>
+                <td><Suspense>{{ flap_highscores[0][1] }}</Suspense></td>
+                <td><Suspense>{{ flap_highscores[0][2] }}</Suspense></td>
+              </tr>
+              <tr>
+                <td><Suspense>{{ flap_highscores[1][0] }}</Suspense></td>
+                <td><Suspense>{{ flap_highscores[1][1] }}</Suspense></td>
+                <td><Suspense>{{ flap_highscores[1][2] }}</Suspense></td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
       <div class="bottom-content-wrapper">
-        <!--        <Suspense>{{testvalue}}</Suspense>-->
       </div>
     </div>
 
@@ -79,13 +102,34 @@ const count = ref(0)
 }
 
 .left-hero-section-wrapper {
-  width: 400px;
+  width: 420px;
   background-color: rgba(255, 255, 255, 0.47);
   border-radius: 30px;
+  margin-left: 30px;
+}
+
+.right-hero-section-wrapper {
+  width: 420px;
+  background-color: rgba(255, 255, 255, 0.47);
+  border-radius: 30px;
+  margin-right: 30px;
 }
 
 .left-hero-section-content {
   padding: 20px;
+}
+
+.right-hero-section-content {
+  padding: 20px;
+}
+
+.high-score-table {
+  margin-top: 20px;
+  color: #ffffff;
+  background-color: #ffb9b9;
+  border-radius: 20px;
+  height: 600px;
+  padding: 10px;
 }
 
 .hero-title {
@@ -98,24 +142,28 @@ const count = ref(0)
   margin-bottom: 10px;
 }
 
+.button-wrapper {
+  margin-top: 25px;
+  //justify-content: center;
+  //display: flex
+}
+
 .play-button {
   color: #ffffff;
   background-color: #ffafaf;
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
+  border-radius: 15px;
+  padding: 10px
 }
 
 .play-button:hover {
   color: #ffdddd;
 }
 
-.play-button:focus {
-  color: #001975;
-}
-
-.right-hero-section-wrapper {
-  width: 400px;
+.play-button:active {
+  background-color: #fd9292;
 }
 
 .nav-play-button {
@@ -124,4 +172,39 @@ const count = ref(0)
   font-weight: 600;
   text-decoration: none;
 }
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+th {
+  background-color: #ffb9b9;
+  color: white;
+  text-align: left;
+  padding: 8px;
+}
+
+.table-left{
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.table-right{
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+td {
+  text-align: left;
+  padding: 8px;
+  color: #515151;
+}
+
+tr:nth-child(even){
+  //background-color: #ff6d6d
+}
+
 </style>
