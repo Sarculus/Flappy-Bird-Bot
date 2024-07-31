@@ -15,32 +15,28 @@
       <div class="hero-content-wrapper">
         <div class="left-hero-section-content">
           <h1 class="hero-title">Flappy Bird</h1>
-        </div>
-        <div class="left-hero-section-content">
-          <p>
+          <p class="main-text">
             Flappy Bird is a mobile game developed by Vietnamese video game artist and programmer Dong Nguyen, under his game development company dotGears. The game is a side-scroller where the player controls a bird, attempting to fly between columns of green pipes without hitting them. Nguyen created the game over the period of several days, using a bird protagonist which he had designed for a cancelled game in 2012.
           </p>
         </div>
       </div>
-
-
-      <div class="main-section-wrapper">
-        <div class="left-hero-section-wrapper">
-          <div class="left-hero-section-content">
-<!--            <h1 class="hero-title">Flappy Bird</h1>-->
-          </div>
-        </div>
-        <div class="middle-hero-section-wrapper">
-          <div class="middle-hero-section-content">
-<!--            <h1 class="hero-title">Flappy Bird</h1>-->
-          </div>
-        </div>
-        <div class="right-hero-section-wrapper">
-          <div class="right-hero-section-content">
-<!--            <h1 class="hero-title">Flappy Bird</h1>-->
-          </div>
-        </div>
-      </div>
+<!--      <div class="main-section-wrapper">-->
+<!--        <div class="left-hero-section-wrapper">-->
+<!--          <div class="left-hero-section-content">-->
+<!--&lt;!&ndash;            <h1 class="hero-title">Flappy Bird</h1>&ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="middle-hero-section-wrapper">-->
+<!--          <div class="middle-hero-section-content">-->
+<!--&lt;!&ndash;            <h1 class="hero-title">Flappy Bird</h1>&ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="right-hero-section-wrapper">-->
+<!--          <div class="right-hero-section-content">-->
+<!--&lt;!&ndash;            <h1 class="hero-title">Flappy Bird</h1>&ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="bottom-content-wrapper">
 <!--        <h1 class="hero-title">Flappy Bird</h1>-->
       </div>
@@ -109,4 +105,9 @@
   font-weight: 600;
   text-decoration: none;
 }
+
+.main-text{
+  margin-left: 10px;
+}
+
 </style>
