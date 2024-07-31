@@ -24,7 +24,8 @@ class FlappyBird:
     def start_game(self):
         self.make_screenshot()
         screen_resolution = [GetSystemMetrics(0), GetSystemMetrics(1)]
-        top_left_x_y_cor = self.find_game_frame_area('../images/main_screen.png', screen_resolution)
+        # top_left_x_y_cor = self.find_game_frame_area('../images/main_screen.png', screen_resolution)
+        top_left_x_y_cor = self.find_game_frame_area('domain/images/main_screen.png', screen_resolution)
         # win32api.SetCursorPos((top_left_x_y_cor[0] + 250, top_left_x_y_cor[1] + 480))
         # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
         # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
@@ -42,10 +43,11 @@ class FlappyBird:
             step_one = time.time_ns()
             self.update_saved_screen(frame_count, top_left_x_y_cor)
             step_two = time.time_ns()
-            print((step_two - step_one) / 1000000000)
-            print("---------------------------------------------------------------------")
+            # print((step_two - step_one) / 1000000000)
+            # print("---------------------------------------------------------------------")
             # image_path = '../images/screen{0}.png'.format(frame_count)
-            image_path = '../images/screen.png'
+            # image_path = '../images/screen.png'
+            image_path = 'domain/images/screen.png'
             new_bird_position = self.get_bird_position(image_path) + 15  # bird head to centre is 15 px
             bird_speed = new_bird_position - old_bird_position  # positive when going down
             old_bird_position = new_bird_position
@@ -54,7 +56,7 @@ class FlappyBird:
                 pipe_position_top = pipe_position_update
             frame_count += 1
             print(new_bird_position, pipe_position_top, pipe_position_top + 180, bird_speed)
-            if threading.active_count() == 1:  # Only click when the previous click thread is finished
+            if threading.active_count() == 2:  # Only click when the previous click thread is finished
                 self.do_a_click_action(new_bird_position, pipe_position_top)
             # if bird_speed > 50:  #TODO: if avereage speed of certain value then do a click
             #     print("speed click!!!")
@@ -67,7 +69,8 @@ class FlappyBird:
             if self.check_end_game(image_path):
                 print("end game")
                 print("-------------------------------")
-                exit()
+                # exit()
+                break
                 # time.sleep(2.0)
                 # self.start_game()
 
@@ -95,7 +98,8 @@ class FlappyBird:
 
     def make_screenshot(self):
         with mss.mss() as sct:
-            sct.shot(output="../images/main_screen.png")  # taking a screenshot and saving it to an image file
+            # sct.shot(output="../images/main_screen.png")  # taking a screenshot and saving it to an image file
+            sct.shot(output="domain/images/main_screen.png")  # taking a screenshot and saving it to an image file
 
 
     def find_game_frame_area(self, image_path, screen_resolution):
@@ -149,7 +153,8 @@ class FlappyBird:
 
     def update_saved_screen(self, count, game_cor):
         # img_name = '../images/screen{0}.png'.format(count)
-        img_name = '../images/screen.png'
+        # img_name = '../images/screen.png'
+        img_name = 'domain/images/screen.png'
         with mss.mss() as sct:
             sct_img = sct.grab({"top": game_cor[1], "left": game_cor[0], "width": 500, "height": 700})
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=img_name)
