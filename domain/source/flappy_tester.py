@@ -56,16 +56,17 @@ class FlappyBird:
                 pipe_position_top = pipe_position_update
             frame_count += 1
             print(new_bird_position, pipe_position_top, pipe_position_top + 180, bird_speed)
-            if threading.active_count() == 2:  # Only click when the previous click thread is finished
+            if (threading.active_count() == 2 or  # TODO: made a change here
+                self.bird_0_to_30_from_bottom_pipe_and_going_down(bird_speed, new_bird_position, pipe_position_top)):  # Only click when the previous click thread is finished
                 self.do_a_click_action(new_bird_position, pipe_position_top)
             # if bird_speed > 50:  #TODO: if avereage speed of certain value then do a click
             #     print("speed click!!!")
             #     print("--------------------------------------")
             #     self.click()
-            if self.bird_0_to_30_from_bottom_pipe_and_going_down(bird_speed, new_bird_position, pipe_position_top):
-                self.click()
-                print("position click!!!")
-                print("--------------------------------------")
+            # if self.bird_0_to_30_from_bottom_pipe_and_going_down(bird_speed, new_bird_position, pipe_position_top):
+            #     self.click()
+            #     print("position click!!!")
+            #     print("--------------------------------------")
             if self.check_end_game(image_path):
                 print("end game")
                 print("-------------------------------")
@@ -83,10 +84,10 @@ class FlappyBird:
         if pipe_position_top == -1 or bird_position == -1:  # TODO: extra flap when large distance to cover?
             t = Timer(0.0, self.go_down)
             t.start()  # method will execute after x seconds independent of the main thread
-        elif bird_position < pipe_position_top + 97:  # 70top 110bottom seems good value, (100, 160)
+        elif bird_position < pipe_position_top + 98:  #97 70top 110bottom seems good value, (100, 160)
             t = Timer(0.0, self.go_down)
             t.start()  # method will execute after x seconds independent of the main thread
-        elif bird_position > pipe_position_top + 192:  # 180 is pipe gap in pixels
+        elif bird_position > pipe_position_top + 180:  #192 180 is pipe gap in pixels
             self.click()
             t = Timer(0.0, self.go_up)
             t.start()  # method will execute after x seconds independent of the main thread
@@ -137,7 +138,7 @@ class FlappyBird:
         #pyautogui.leftClick()
         # time.sleep(0.01)  # temp as a test
         #self.click()
-        time.sleep(0.26)  #0.35 0.30 0.25
+        # time.sleep(0.26)  #0.35 0.30 0.25
 
     def go_down(self):
         print('go down')
@@ -149,14 +150,14 @@ class FlappyBird:
         print('go steady')
         #pyautogui.leftClick()
         #self.click()
-        time.sleep(0.49)  #0.50 0.45 0.40
+        time.sleep(0.50)  #0.49 0.50 0.45 0.40
 
     def update_saved_screen(self, count, game_cor):
         # img_name = '../images/screen{0}.png'.format(count)
         # img_name = '../images/screen.png'
         img_name = 'domain/images/screen.png'
         with mss.mss() as sct:
-            sct_img = sct.grab({"top": game_cor[1], "left": game_cor[0], "width": 500, "height": 700})
+            sct_img = sct.grab({"top": game_cor[1], "left": game_cor[0], "width": 500, "height": 600})
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=img_name)
         # iml = pyautogui.screenshot(region=(game_cor[0], game_cor[1], 500, 700))  # 50% slower then mss
         # iml.save(img_name)
@@ -200,7 +201,7 @@ class FlappyBird:
         frame = Image.open(image_path)
         #frame = Image.open('./screen.png')  # opening latest screenshot from the image file
 
-        origin_x = 400 #375 380 420 #390 #499  # top left corner of the image section
+        origin_x = 410 #375 380 420 #390 #499  # top left corner of the image section
         origin_y = 0  # top left corner of the image section
         size_x = 1  # section width
         size_y = 600  # section height
@@ -217,7 +218,7 @@ class FlappyBird:
     def bird_not_in_pipe(self, image_path):
         frame = Image.open(image_path)
 
-        origin_x = 154  # 142
+        origin_x = 151  #152  154 142
         origin_y = 0
         size_x = 1
         size_y = 1
