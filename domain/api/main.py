@@ -3,13 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from domain.api.domain_test_input import TestClass
 from domain.source.flappy_tester import FlappyBird
 
-import redis
-import json
-r = redis.Redis(
-  host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
-  port=17414,
-  password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
-  decode_responses=True)
+# import redis
+# import json
+# r = redis.Redis(
+#   host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
+#   port=17414,
+#   password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
+#   decode_responses=True)
 
 #http://127.0.0.1:8000/docs#/
 app = FastAPI()
@@ -36,17 +36,17 @@ def root():
 
 @app.get("/api/testclass")
 def get_testclass():
-    test = r.get('1')
-    test2 = r.get('2')
-    test3 = json.loads(test)
-    test4 = json.loads(test2)
-    return_list = []
-    return_list.append(test3)
-    return_list.append(test4)
-    print(return_list)
-    return return_list
-    # p1 = TestClass()
-    # return p1.test_list_2
+    # test = r.get('1')
+    # test2 = r.get('2')
+    # test3 = json.loads(test)
+    # test4 = json.loads(test2)
+    # return_list = []
+    # return_list.append(test3)
+    # return_list.append(test4)
+    # print(return_list)
+    # return return_list
+    p1 = TestClass()
+    return p1.test_list_2
 
 @app.post("/api/items")
 def create_item(item: str):

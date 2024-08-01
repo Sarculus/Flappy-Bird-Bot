@@ -9,8 +9,6 @@ import numpy as np
 import win32api
 import win32con
 from win32api import GetSystemMetrics
-import easyocr
-
 
 #TODO: variables: sleeptime of each click method, cusion distance between pipe, x cordinate of polling pixel line for a new pipe
 
@@ -58,7 +56,7 @@ class FlappyBird:
                 pipe_position_top = pipe_position_update
             frame_count += 1
             print(new_bird_position, pipe_position_top, pipe_position_top + 180, bird_speed)
-            if (threading.active_count() == 2): #Only click when the previous click thread is finished
+            if threading.active_count() == 2:  # Only click when the previous click thread is finished
                 self.do_a_click_action(new_bird_position, pipe_position_top)
             # if bird_speed > 50:  #TODO: if avereage speed of certain value then do a click
             #     print("speed click!!!")
@@ -71,13 +69,8 @@ class FlappyBird:
             if self.check_end_game(image_path):
                 print("end game")
                 print("-------------------------------")
-                time.sleep(2)
-                self.update_saved_screen(frame_count, top_left_x_y_cor)
-                # reader = easyocr.Reader(['en'])
-                # result = reader.readtext(image_path)
-                # for (bbox, text, prob) in result:
-                #     print(f'Text: {text}, Probability: {prob}')
-                # exit()
+                # time.sleep(2)
+                # self.update_saved_screen(frame_count, top_left_x_y_cor)
                 break
                 # time.sleep(2.0)
                 # self.start_game()

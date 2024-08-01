@@ -9,10 +9,10 @@ r = redis.Redis(
 # r.set('foo', 'bar')
 # print(r.get('foo'))
 
-r.set('1', '["1", "31-07-2024", "34"]')
-print(r.get('1'))
-r.set('2', '["2", "31-07-2024", "26"]')
-print(r.get('2'))
+# r.set('mykey', '["1", "31-07-2024", "34"]')
+# print(r.get('1'))
+# r.set('2', '["2", "31-07-2024", "26"]')
+# print(r.get('2'))
 # [["1", "31-07-2024", "34"], ["2", "31-07-2024", "26"]]
 
 # get and set dictionaries
