@@ -23,6 +23,8 @@ pip install Pillow
 pip install numpy
 pip install mss
 pip install pywin32
+pip install redis
+pip install pytesseract
 ```
 install FastAPI and Uvicorn:
 ```
