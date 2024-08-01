@@ -58,7 +58,7 @@ def start_game_bot():
     print("game bot started")
     fb = FlappyBird()
     top_left_x_y_cor = fb.start_game()
-    fb.start_gameplay_loop(fb.frame_count, top_left_x_y_cor, fb.pipe_position, fb.bird_position)
+    fb.start_gameplay_loop(fb.frame_count, top_left_x_y_cor, fb.pipe_position, fb.bird_position, fb.old_bird_speed)
 
 @app.post("/api/stop_game_bot")
 def start_game_bot():
