@@ -23,6 +23,7 @@ pip install Pillow
 pip install numpy
 pip install mss
 pip install pywin32
+pip install redis
 ```
 install FastAPI and Uvicorn:
 ```
