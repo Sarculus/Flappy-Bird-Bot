@@ -72,8 +72,8 @@ async function stop_bot() {
               <template v-for="(score, index) in flap_highscores">
                 <tr>
                   <td><Suspense>{{ index + 1 }}</Suspense></td>
+                  <td><Suspense>{{ score[0] }}</Suspense></td>
                   <td><Suspense>{{ score[1] }}</Suspense></td>
-                  <td><Suspense>{{ score[2] }}</Suspense></td>
                 </tr>
               </template>
             </table>
