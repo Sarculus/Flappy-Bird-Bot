@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 
 
 //GET REQUEST//
-const flap_highscores = ref([[], []])
+const flap_highscores = ref([])
 onMounted(async () => {
   flap_highscores.value = await getHighscores()
 })
@@ -29,6 +29,10 @@ async function stop_bot() {
     headers: {'Content-Type': 'application/json'},
   })
   console.log(response.statusText)
+}
+
+async function updateHighscores() {
+  flap_highscores.value = await getHighscores()
 }
 
 </script>
@@ -69,17 +73,17 @@ async function stop_bot() {
                 <th>Date</th>
                 <th class="table-right">Score</th>
               </tr>
-              <tr>
-                <td><Suspense>{{ flap_highscores[0][0] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[0][1] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[0][2] }}</Suspense></td>
-              </tr>
-              <tr>
-                <td><Suspense>{{ flap_highscores[1][0] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[1][1] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[1][2] }}</Suspense></td>
-              </tr>
+              <template v-for="(score, index) in flap_highscores">
+                <tr>
+                  <td><Suspense>{{ index + 1 }}</Suspense></td>
+                  <td><Suspense>{{ score[0] }}</Suspense></td>
+                  <td><Suspense>{{ score[1] }}</Suspense></td>
+                </tr>
+              </template>
             </table>
+            <div class="update-button-wrapper">
+              <button class="update-button" type="button" @click="updateHighscores()">Update Highscores</button>
+            </div>
           </div>
         </div>
       </div>
@@ -205,6 +209,30 @@ td {
 
 tr:nth-child(even){
   //background-color: #ff6d6d
+}
+
+.update-button {
+  color: #ffffff;
+  background-color: #83ff98;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 15px;
+  padding: 10px
+}
+
+.update-button:hover {
+  color: #ffdddd;
+}
+
+.update-button:active {
+  background-color: #fd9292;
+}
+
+.update-button-wrapper{
+  margin-top: 100px;
+  justify-content: center;
+  display: flex
 }
 
 </style>
