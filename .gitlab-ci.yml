@@ -34,7 +34,7 @@ code-coverage-job:
     - cd domain/tests
     - pytest --cov --cov-report term --cov-report xml:coverage.xml
 
-  coverage: '/builds/rkeijzer/personal-ip/domain/source/flappy_tester.py.*\s([.\d]+)%/'
+  coverage: '/builds/rkeijzer/personal-ip/domain/source/flappy_bird.py.*\s([.\d]+)%/'
 
   artifacts:
     reports:
