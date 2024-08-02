@@ -31,6 +31,10 @@ async function stop_bot() {
   console.log(response.statusText)
 }
 
+async function updateHighscores() {
+  flap_highscores.value = await getHighscores()
+}
+
 </script>
 
 <template>
@@ -77,6 +81,9 @@ async function stop_bot() {
                 </tr>
               </template>
             </table>
+            <div class="update-button-wrapper">
+              <button class="update-button" type="button" @click="updateHighscores()">Update Highscores</button>
+            </div>
           </div>
         </div>
       </div>
@@ -202,6 +209,30 @@ td {
 
 tr:nth-child(even){
   //background-color: #ff6d6d
+}
+
+.update-button {
+  color: #ffffff;
+  background-color: #83ff98;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 15px;
+  padding: 10px
+}
+
+.update-button:hover {
+  color: #ffdddd;
+}
+
+.update-button:active {
+  background-color: #fd9292;
+}
+
+.update-button-wrapper{
+  margin-top: 100px;
+  justify-content: center;
+  display: flex
 }
 
 </style>
