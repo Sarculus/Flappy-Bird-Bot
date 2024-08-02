@@ -8,6 +8,8 @@ import numpy as np
 import win32api
 import win32con
 from win32api import GetSystemMetrics
+from datetime import date
+import redis
 
 
 class FlappyBird:
@@ -168,3 +170,28 @@ class FlappyBird:
         print("-------------------------------")
         # time.sleep(2)
         # self.update_saved_screen(frame_count, top_left_x_y_cor)
+        score = 130
+        date_dmy = f"{date.today().day}-{date.today().month}-{date.today().year}"
+        r = redis.Redis(
+            host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
+            port=17414,
+            password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
+            decode_responses=True)
+        r.incr('idcounter')
+        name = f"{r.get("idcounter")} {date_dmy}"
+        r.zadd('highscorestest2', {name: score})
+
+        # score = "45"
+        # date_dmy = f"{date.today().day}-{date.today().month}-{date.today().year}"
+        # highscore = str([date_dmy, score])
+        # print(highscore)
+        # print(type(highscore))
+        # r = redis.Redis(
+        #     host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
+        #     port=17414,
+        #     password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
+        #     decode_responses=True)
+        # r.zadd('highscores', {score: date_dmy})
+
+        # r.incr('idcounter')
+        # r.set(f'{r.get("idcounter")}', highscore)
