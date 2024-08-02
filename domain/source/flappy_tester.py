@@ -65,7 +65,7 @@ class FlappyBird:
             #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             #     print("speed click-----------------------------------")
             if (self.bird_0_to_30_from_bottom_pipe_and_going_down(new_bird_speed, new_bird_position, pipe_position_top) and  #TODO: second onewithout speed requirment?
-                    30 < bird_speed_avg < 100): #and threading.active_count() > 2: #TODO: changed
+                    30 < bird_speed_avg < 100) and threading.active_count() > 2: #TODO: changed
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
                 print("position click------------------")
@@ -80,8 +80,8 @@ class FlappyBird:
             print("---------------------------")
 
     def bird_0_to_30_from_bottom_pipe_and_going_down(self, bird_speed, new_bird_position, pipe_position_top):
-        # if pipe_position_top + 130 < new_bird_position < pipe_position_top + 180 and bird_speed > 1:  #TODO: changed
-        if pipe_position_top + 80 < new_bird_position < pipe_position_top + 190 and bird_speed > 1:
+        if pipe_position_top + 130 < new_bird_position < pipe_position_top + 180 and bird_speed > 1:
+        # if pipe_position_top + 80 < new_bird_position < pipe_position_top + 190 and bird_speed > 1:  #TODO: changed
             return True
         return False
 
@@ -200,8 +200,8 @@ class FlappyBird:
     def bird_not_in_pipe(self, image_path):
         frame = Image.open(image_path)
 
-        # origin_x = 150  #152  154 142
-        origin_x = 149  # TODO: changed
+        origin_x = 150  #152  154 142
+        # origin_x = 149  # TODO: changed
         origin_y = 0
         size_x = 1
         size_y = 1
