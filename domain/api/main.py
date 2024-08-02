@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from domain.api.domain_test_input import TestClass
-from domain.source.flappy_tester import FlappyBird
+from domain.source.flappy_bird import FlappyBird
 
 # import redis
 # import json

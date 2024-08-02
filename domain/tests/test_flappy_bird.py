@@ -1,4 +1,4 @@
-from domain.source.flappy_tester import FlappyBird
+from domain.source.flappy_bird import FlappyBird
 
 class TestFlappyBird:
 
