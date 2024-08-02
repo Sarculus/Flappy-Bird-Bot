@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 
 
 //GET REQUEST//
-const flap_highscores = ref([[], []])
+const flap_highscores = ref([])
 onMounted(async () => {
   flap_highscores.value = await getHighscores()
 })
@@ -69,16 +69,13 @@ async function stop_bot() {
                 <th>Date</th>
                 <th class="table-right">Score</th>
               </tr>
-              <tr>
-                <td><Suspense>{{ flap_highscores[0][0] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[0][1] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[0][2] }}</Suspense></td>
-              </tr>
-              <tr>
-                <td><Suspense>{{ flap_highscores[1][0] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[1][1] }}</Suspense></td>
-                <td><Suspense>{{ flap_highscores[1][2] }}</Suspense></td>
-              </tr>
+              <template v-for="(score, index) in flap_highscores">
+                <tr>
+                  <td><Suspense>{{ index }}</Suspense></td>
+                  <td><Suspense>{{ score[1] }}</Suspense></td>
+                  <td><Suspense>{{ score[2] }}</Suspense></td>
+                </tr>
+              </template>
             </table>
           </div>
         </div>
