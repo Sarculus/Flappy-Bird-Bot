@@ -11,7 +11,7 @@ r = redis.Redis(
     decode_responses=True)
 r.incr('idcounter')
 name = f"{r.get("idcounter")} {date_dmy}"
-r.zadd('highscorestest2', {name: score})
+# r.zadd('highscorestest2', {name: score})
 
 
 

@@ -80,7 +80,7 @@ class FlappyBird:
             print("---------------------------")
 
             if self.check_end_game(image_path):
-                self.end_game()
+                self.end_game(frame_count, top_left_x_y_cor, image_path)
                 break
 
 
@@ -88,7 +88,7 @@ class FlappyBird:
         pipe_position_bottom = pipe_position_top + 180
         if pipe_position_top == -1 or bird_position == -1:
             print('no data, go down')
-        elif pipe_position_top + 85 < bird_position < pipe_position_bottom + 10 and 30 < bird_speed_avg < 100:
+        elif pipe_position_top + 90 < bird_position < pipe_position_bottom + 10 and 30 < bird_speed_avg < 100:
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             print("position click------------------")
@@ -165,12 +165,13 @@ class FlappyBird:
             return True
         return False
 
-    def end_game(self):
+    def end_game(self, frame_count, top_left_x_y_cor, image_path):
         print("end game")
         print("-------------------------------")
-        # time.sleep(2)
-        # self.update_saved_screen(frame_count, top_left_x_y_cor)
-        score = 130
+        time.sleep(3)
+        self.update_saved_screen(frame_count, top_left_x_y_cor)
+        # score = self.get_score(image_path)
+        score = 103
         date_dmy = f"{date.today().day}-{date.today().month}-{date.today().year}"
         r = redis.Redis(
             host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
@@ -195,3 +196,16 @@ class FlappyBird:
 
         # r.incr('idcounter')
         # r.set(f'{r.get("idcounter")}', highscore)
+
+    def get_score(self, image_path):
+        origin_x = 385; origin_y = 310; size_x = 22; size_y = 32
+
+        frame = Image.open(image_path)
+        end_game_screen = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
+        end_game_screen.save('domain/images/score.png')
+        # image_pixel_value = np.array(end_game_screen.getdata())
+        #
+        # if image_pixel_value[0][0] == 227:
+        #     pipe_position = i
+        #     return pipe_position
+        return -1

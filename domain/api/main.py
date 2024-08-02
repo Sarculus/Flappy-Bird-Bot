@@ -2,15 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from domain.api.domain_test_input import TestClass
 from domain.source.flappy_bird import FlappyBird
-import ast
 
-import redis
-import json
-r = redis.Redis(
-  host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
-  port=17414,
-  password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
-  decode_responses=True)
 
 #http://127.0.0.1:8000/docs#/
 app = FastAPI()
@@ -37,6 +29,13 @@ def root():
 
 @app.get("/api/testclass")
 def get_testclass():
+    import redis
+    r = redis.Redis(
+        host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
+        port=17414,
+        password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
+        decode_responses=True)
+
     sorted_list = r.zrange('highscorestest2', 0, 9, desc=True, withscores=True)
     return_list = []
     for i in range(0, 10):
