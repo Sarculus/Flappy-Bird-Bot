@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from domain.api.domain_test_input import TestClass
+# from domain.source.flappy_working import FlappyBird
 from domain.source.flappy_bird import FlappyBird
 
 
@@ -36,9 +37,9 @@ def get_testclass():
         password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
         decode_responses=True)
 
-    sorted_list = r.zrange('highscorestest2', 0, 9, desc=True, withscores=True)
+    sorted_list = r.zrange('highscorestest6', 0, 9, desc=True, withscores=True)
     return_list = []
-    for i in range(0, 10):
+    for i in range(len(sorted_list)):
         score_part = sorted_list[i][1]
         date_part = sorted_list[0][0]
         date_part_split = date_part.split(" ")

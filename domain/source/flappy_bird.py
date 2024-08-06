@@ -92,6 +92,11 @@ class FlappyBird:
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             print("position click------------------")
+            #  and threading.active_count() < 4
+            # t1 = Timer(0.0, self.go_position)
+            # t2 = Timer(0.0, self.go_position)
+            # t1.start()
+            # t2.start()
         elif pipe_position_top + 98 <= bird_position <= pipe_position_bottom and threading.active_count() < 3:
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
@@ -170,8 +175,9 @@ class FlappyBird:
         print("-------------------------------")
         time.sleep(3)
         self.update_saved_screen(frame_count, top_left_x_y_cor)
-        # score = self.get_score(image_path)
-        score = 103
+        score = self.get_score(image_path)
+        print(score)
+        # score = 103
         date_dmy = f"{date.today().day}-{date.today().month}-{date.today().year}"
         r = redis.Redis(
             host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
@@ -180,7 +186,7 @@ class FlappyBird:
             decode_responses=True)
         r.incr('idcounter')
         name = f"{r.get("idcounter")} {date_dmy}"
-        r.zadd('highscorestest2', {name: score})
+        r.zadd('highscorestest6', {name: score})
 
         # score = "45"
         # date_dmy = f"{date.today().day}-{date.today().month}-{date.today().year}"
@@ -198,14 +204,57 @@ class FlappyBird:
         # r.set(f'{r.get("idcounter")}', highscore)
 
     def get_score(self, image_path):
-        origin_x = 385; origin_y = 310; size_x = 22; size_y = 32
-
         frame = Image.open(image_path)
+        origin_x = 385; origin_y = 310; size_x = 22; size_y = 32
+        first_digit = self.number_from_image(frame, origin_x, origin_y, size_x, size_y)
+
+        origin_x = 357
+        second_digit = self.number_from_image(frame, origin_x, origin_y, size_x, size_y)
+
+        origin_x = 329
+        third_digit = self.number_from_image(frame, origin_x, origin_y, size_x, size_y)
+
+        print(third_digit, second_digit, first_digit)
+        score = int(str(third_digit) + str(second_digit) + str(first_digit))
+        return score
+
+    def number_from_image(self, frame, origin_x, origin_y, size_x, size_y):
         end_game_screen = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
-        end_game_screen.save('domain/images/score.png')
-        # image_pixel_value = np.array(end_game_screen.getdata())
-        #
-        # if image_pixel_value[0][0] == 227:
-        #     pipe_position = i
-        #     return pipe_position
-        return -1
+        end_game_screen_pixel_topleft = frame.crop((origin_x + 2, origin_y + 9, origin_x + 3, origin_y + 10))
+        end_game_screen_pixel_bottomleft = frame.crop((origin_x + 2, origin_y + 19, origin_x + 3, origin_y + 20))
+
+        # end_game_screen_pixel_topleft.save('domain/images/score_top.png')
+        # end_game_screen_pixel_bottomleft.save('domain/images/score_bottom.png')
+        # end_game_screen.save('domain/images/score.png')
+
+        gray_frame = ImageOps.grayscale(end_game_screen)
+        image_pixel_values = np.array(gray_frame.getdata())
+        image_pixel_value = np.mean(image_pixel_values)
+        print(round(image_pixel_value))
+
+        topleft_pixel = np.array(end_game_screen_pixel_topleft.getdata())
+        bottomleft_pixel = np.array(end_game_screen_pixel_bottomleft.getdata())
+        # print(topleft_pixel, bottomleft_pixel)
+
+        if round(image_pixel_value) == 147 or round(image_pixel_value) == 144:
+            return 1
+        elif round(image_pixel_value) == 149:
+            return 4
+        elif round(image_pixel_value) == 165:
+            return 6
+        elif round(image_pixel_value) == 153:
+            return 7
+        elif round(image_pixel_value) == 172:
+            return 8
+        elif round(image_pixel_value) == 162 and bottomleft_pixel[0][0] == 0:
+            return 9
+        elif topleft_pixel[0][0] == 255 and bottomleft_pixel[0][0] == 255:
+            return 0
+        elif topleft_pixel[0][0] == 0 and bottomleft_pixel[0][0] == 255:
+            return 2
+        elif topleft_pixel[0][0] == 0 and bottomleft_pixel[0][0] == 0:
+            return 3
+        elif topleft_pixel[0][0] == 255 and bottomleft_pixel[0][0] == 0:
+            return 5
+        else:
+            return 0
