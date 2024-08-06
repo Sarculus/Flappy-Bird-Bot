@@ -65,7 +65,7 @@ class FlappyBird:
             #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             #     print("speed click-----------------------------------")
             if (self.bird_0_to_30_from_bottom_pipe_and_going_down(new_bird_speed, new_bird_position, pipe_position_top) and  #TODO: second onewithout speed requirment?
-                    30 < bird_speed_avg < 100) and threading.active_count() > 2:
+                    30 < bird_speed_avg < 100): #and threading.active_count() > 2:
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
                 print("position click------------------")
@@ -80,7 +80,7 @@ class FlappyBird:
             print("---------------------------")
 
     def bird_0_to_30_from_bottom_pipe_and_going_down(self, bird_speed, new_bird_position, pipe_position_top):
-        if pipe_position_top + 100 < new_bird_position < pipe_position_top + 190 and bird_speed > 1:
+        if pipe_position_top + 70 < new_bird_position < pipe_position_top + 190 and bird_speed > 1:
             return True
         return False
 
