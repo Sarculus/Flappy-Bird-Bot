@@ -17,6 +17,7 @@ class FlappyBird:
     pipe_position = -1
     bird_position = 295
     old_bird_speed = 0
+    position_click_on = True
 
     def __init__(self):
         pass
@@ -65,10 +66,17 @@ class FlappyBird:
             #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             #     print("speed click-----------------------------------")
             if (self.bird_0_to_30_from_bottom_pipe_and_going_down(new_bird_speed, new_bird_position, pipe_position_top) and  #TODO: second onewithout speed requirment?
-                    30 < bird_speed_avg < 100): #and threading.active_count() > 2:
+                    29 < bird_speed_avg < 100) and self.position_click_on: #and threading.active_count() > 2:
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
-                print("position click------------------")
+                print("position click---------------------->")
+                t = Timer(0.0, self.go_click)
+                t.start()
+                self.position_click_on = False
+            # if pipe_position_top + 160 <= new_bird_position <= pipe_position_top + 180 and threading.active_count() > 2:
+            #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+            #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+            #     print("close to pipe click click---------------------->")
             if self.check_end_game(image_path):
                 print("end game")
                 print("-------------------------------")
@@ -80,14 +88,14 @@ class FlappyBird:
             print("---------------------------")
 
     def bird_0_to_30_from_bottom_pipe_and_going_down(self, bird_speed, new_bird_position, pipe_position_top):
-        if pipe_position_top + 70 < new_bird_position < pipe_position_top + 190 and bird_speed > 1:
+        if pipe_position_top + 72 < new_bird_position < pipe_position_top + 190 and bird_speed > 1:
             return True
         return False
 
     def do_a_click_action(self, bird_position, pipe_position_top):
         if pipe_position_top == -1 or bird_position == -1:
             print('no data, go down')
-        elif pipe_position_top + 98 <= bird_position <= pipe_position_top + 180 and threading.active_count() < 3:
+        elif pipe_position_top + 100 <= bird_position <= pipe_position_top + 180 and threading.active_count() < 3:
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             print('go steady')
@@ -134,6 +142,10 @@ class FlappyBird:
 
     def go_steady(self):
         time.sleep(0.51)
+
+    def go_click(self):
+        time.sleep(0.20)
+        self.position_click_on = True
 
     def update_saved_screen(self, count, game_cor):
         # img_name = '../images/screen{0}.png'.format(count)
