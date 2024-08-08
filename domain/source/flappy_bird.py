@@ -185,7 +185,7 @@ class FlappyBird:
             password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
             decode_responses=True)
         r.incr('idcounter')
-        name = f"{r.get("idcounter")} {date_dmy}"
+        name = f"{r.get('idcounter')} {date_dmy}"
         r.zadd('highscorestest6', {name: score})
 
         # score = "45"
