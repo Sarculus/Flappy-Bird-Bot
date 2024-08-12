@@ -37,7 +37,7 @@ def get_testclass():
         password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
         decode_responses=True)
 
-    sorted_list = r.zrange('highscorestest6', 0, 9, desc=True, withscores=True)
+    sorted_list = r.zrange('highscorestest7', 0, 9, desc=True, withscores=True)
     return_list = []
     for i in range(len(sorted_list)):
         score_part = sorted_list[i][1]

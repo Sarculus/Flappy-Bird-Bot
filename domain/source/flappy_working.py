@@ -234,8 +234,7 @@ class FlappyBird:
             decode_responses=True)
         r.incr('idcounter')
         name = f"{r.get('idcounter')} {date_dmy}"
-        print(name, score)
-        r.zadd('highscorestest6', {name: score})
+        r.zadd('highscorestest7', {name: score})
 
     def get_score(self, image_path):
         frame = Image.open(image_path)
