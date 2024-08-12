@@ -1,15 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from domain.api.domain_test_input import TestClass
-from domain.source.flappy_bird import FlappyBird
+from domain.source.flappy_working import FlappyBird
+# from domain.source.flappy_bird import FlappyBird
 
-# import redis
-# import json
-# r = redis.Redis(
-#   host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
-#   port=17414,
-#   password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
-#   decode_responses=True)
 
 #http://127.0.0.1:8000/docs#/
 app = FastAPI()
@@ -36,17 +30,35 @@ def root():
 
 @app.get("/api/testclass")
 def get_testclass():
-    # test = r.get('1')
-    # test2 = r.get('2')
-    # test3 = json.loads(test)
-    # test4 = json.loads(test2)
+    import redis
+    r = redis.Redis(
+        host='redis-17414.c327.europe-west1-2.gce.redns.redis-cloud.com',
+        port=17414,
+        password='TZgxGtwgJost678XJpsSKdndjYFBQltA',
+        decode_responses=True)
+
+    sorted_list = r.zrange('highscorestest6', 0, 9, desc=True, withscores=True)
+    return_list = []
+    for i in range(len(sorted_list)):
+        score_part = sorted_list[i][1]
+        date_part = sorted_list[i][0]
+        date_part_split = date_part.split(" ")
+        date_score = [date_part_split[1], score_part]
+        return_list.append(date_score)
+    return return_list
+
     # return_list = []
-    # return_list.append(test3)
+    # for i in range(1, 12):
+    #     test = r.get(f'{i}')
+    #     test2 = ast.literal_eval(test)
+    #     return_list.append(test2)
+    # test3 = r.get('mykeytest')
+    # test4 = ast.literal_eval(test3)
     # return_list.append(test4)
     # print(return_list)
     # return return_list
-    p1 = TestClass()
-    return p1.test_list_2
+    # p1 = TestClass()
+    # return p1.test_list_2
 
 @app.post("/api/items")
 def create_item(item: str):
