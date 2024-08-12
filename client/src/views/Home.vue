@@ -204,7 +204,10 @@ th {
 td {
   text-align: left;
   padding: 8px;
-  color: #515151;
+  //color: #757575;
+  color: #303030;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 tr:nth-child(even){
