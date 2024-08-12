@@ -41,7 +41,7 @@ def get_testclass():
     return_list = []
     for i in range(len(sorted_list)):
         score_part = sorted_list[i][1]
-        date_part = sorted_list[0][0]
+        date_part = sorted_list[i][0]
         date_part_split = date_part.split(" ")
         date_score = [date_part_split[1], score_part]
         return_list.append(date_score)
