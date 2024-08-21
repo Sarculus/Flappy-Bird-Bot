@@ -62,7 +62,7 @@ class FlappyBird:
     def start_gameplay_loop(self, top_left_x_y_cor, pipe_position_top, old_bird_position, old_bird_speed):
         image_path = 'domain/images/screen.png'
         while True:
-            self.update_saved_screen(top_left_x_y_cor)
+            self.update_saved_screen(top_left_x_y_cor, image_path)
             new_bird_position = self.get_bird_position(image_path) + 15  # bird head to centre is 15 px
             new_bird_speed = new_bird_position - old_bird_position  # positive when going down
             bird_speed_avg = (new_bird_speed + old_bird_speed) / 2
@@ -71,57 +71,42 @@ class FlappyBird:
             pipe_position_update = self.get_pipe_position(image_path)
             if pipe_position_update != 0 and self.bird_not_in_pipe(image_path):
                 pipe_position_top = pipe_position_update
-            print(new_bird_position, pipe_position_top, pipe_position_top + 180,bird_speed_avg,threading.active_count())
-            self.do_a_click_action(new_bird_position, pipe_position_top)
 
-            if (self.bird_0_to_30_from_bottom_pipe_and_going_down(new_bird_speed, new_bird_position, pipe_position_top) and  #TODO: second onewithout speed requirment?
-                    29 < bird_speed_avg < 100) and self.position_click_on:
-                win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
-                win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
-                print("position click---------------------->")
-                t = Timer(0.0, self.go_click)
-                t.start()
-                self.position_click_on = False
+            print(new_bird_position, pipe_position_top, pipe_position_top + 180, bird_speed_avg)
+            self.do_a_click_action(new_bird_position, pipe_position_top, bird_speed_avg)
+            print("---------------------------")
+
             if self.check_end_game(image_path):
                 self.end_game(top_left_x_y_cor, image_path)
                 break
-            print("---------------------------")
 
-    def update_saved_screen(self, game_cor):
-        img_name = 'domain/images/screen.png'
+
+    def update_saved_screen(self, game_cor, image_path):
         with mss.mss() as sct:
             sct_img = sct.grab({"top": game_cor[1], "left": game_cor[0], "width": 500, "height": 600})
-            mss.tools.to_png(sct_img.rgb, sct_img.size, output=img_name)
+            mss.tools.to_png(sct_img.rgb, sct_img.size, output=image_path)
 
     def get_bird_position(self, image_path):
-        frame = Image.open(image_path)
+        origin_x = 142; origin_y = 0; size_x = 1; size_y = 600
 
-        origin_x = 142
-        origin_y = 0
-        size_x = 1
-        size_y = 600
+        frame = Image.open(image_path)
         image_section_bird = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
         gray_frame = ImageOps.grayscale(image_section_bird)
         image_pixel_values = np.array(gray_frame.getdata())
 
-        bird_position = -1
         for i in range(len(image_pixel_values)):
             if image_pixel_values[i] == 181:
                 bird_position = i
-                break
-
-        return bird_position
+                return bird_position
+        return -1
 
     def get_pipe_position(self, image_path):
-        frame = Image.open(image_path)
+        origin_x = 410; origin_y = 0; size_x = 1; size_y = 600
 
-        origin_x = 410
-        origin_y = 0
-        size_x = 1
-        size_y = 600
+        frame = Image.open(image_path)
         image_section_pipe = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
         gray_frame = ImageOps.grayscale(image_section_pipe)
-        image_pixel_values = np.array(gray_frame.getdata())  # turn into an array of rgb numbers (0-255)
+        image_pixel_values = np.array(gray_frame.getdata())
 
         for i in range(len(image_pixel_values)):
             if image_pixel_values[i] == 176:
@@ -130,51 +115,41 @@ class FlappyBird:
         return -1
 
     def bird_not_in_pipe(self, image_path):
-        frame = Image.open(image_path)
+        origin_x = 150; origin_y = 0; size_x = 1; size_y = 1
 
-        origin_x = 150
-        origin_y = 0
-        size_x = 1
-        size_y = 1
+        frame = Image.open(image_path)
         image_section_pipe = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
         gray_frame = ImageOps.grayscale(image_section_pipe)
         image_pixel_value = np.array(gray_frame.getdata())
+
         if image_pixel_value == 176:
             return True
         return False
 
-
-
-
-
-    def bird_0_to_30_from_bottom_pipe_and_going_down(self, bird_speed, new_bird_position, pipe_position_top):
-        if pipe_position_top + 72 < new_bird_position < pipe_position_top + 190 and bird_speed > 1:
-            return True
-        return False
-
-    def do_a_click_action(self, bird_position, pipe_position_top):
+    def do_a_click_action(self, bird_position, pipe_position_top, bird_speed_avg):
+        pipe_position_bottom = pipe_position_top + 180
         if pipe_position_top == -1 or bird_position == -1:
             print('no data, go down')
-        elif pipe_position_top + 100 <= bird_position <= pipe_position_top + 180 and threading.active_count() < 3:
+        elif pipe_position_top + 100 <= bird_position <= pipe_position_bottom and threading.active_count() < 3:
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             print('go steady')
             t = Timer(0.0, self.go_steady)
             t.start()
-        elif bird_position > pipe_position_top + 180 and threading.active_count() < 3:
+        elif bird_position > pipe_position_bottom and threading.active_count() < 3:
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
             print('go up')
         elif bird_position < pipe_position_top + 98:
             print('go down')
-
-
-
-
-
-
-
-
+        if ((pipe_position_top + 72 < bird_position < pipe_position_bottom + 10) and (29 < bird_speed_avg < 100) and
+                self.position_click_on):
+            win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+            win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+            print("position click---------------------->")
+            t = Timer(0.0, self.go_click)
+            t.start()
+            self.position_click_on = False
 
     def go_steady(self):
         time.sleep(0.51)
@@ -183,35 +158,22 @@ class FlappyBird:
         time.sleep(0.20)
         self.position_click_on = True
 
-
-
-
     def check_end_game(self, image_path):
+        origin_x = 140; origin_y = 599; size_x = 1; size_y = 1
+
         frame = Image.open(image_path)
-
-        origin_x = 140
-        origin_y = 599
-        size_x = 1
-        size_y = 1
-
         end_game_screen = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
         image_pixel_value = np.array(end_game_screen.getdata())
+
         if image_pixel_value[0][0] == 227:
             return True
         return False
-
-
-
-
-
-
-
 
     def end_game(self, top_left_x_y_cor, image_path):
         print("end game")
         print("-------------------------------")
         time.sleep(3)
-        self.update_saved_screen(top_left_x_y_cor)
+        self.update_saved_screen(top_left_x_y_cor, image_path)
         score = self.get_score(image_path)
         print(score)
         date_dmy = f"{date.today().day}-{date.today().month}-{date.today().year}"
@@ -243,7 +205,6 @@ class FlappyBird:
         end_game_screen = frame.crop((origin_x, origin_y, origin_x + size_x, origin_y + size_y))
         end_game_screen_pixel_topleft = frame.crop((origin_x + 2, origin_y + 9, origin_x + 3, origin_y + 10))
         end_game_screen_pixel_bottomleft = frame.crop((origin_x + 2, origin_y + 19, origin_x + 3, origin_y + 20))
-
 
         gray_frame = ImageOps.grayscale(end_game_screen)
         image_pixel_values = np.array(gray_frame.getdata())
