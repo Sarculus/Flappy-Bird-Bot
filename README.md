@@ -1,13 +1,5 @@
 # Personal IP
 
-CI/CD status:
-
-[![pipeline status](https://git.sogyo.nl/rkeijzer/personal-ip/badges/main/pipeline.svg)](https://git.sogyo.nl/rkeijzer/personal-ip/-/commits/main)
-
-[![coverage report](https://git.sogyo.nl/rkeijzer/personal-ip/badges/main/coverage.svg)](https://git.sogyo.nl/rkeijzer/personal-ip/-/commits/main)
-
-
-
 ## Dependencies
 ### Client
 Install dependencies:
@@ -28,12 +20,14 @@ pip install redis
 install FastAPI and Uvicorn:
 ```
 pip install fastapi
+pip install uvicorn
 ```
 Make sure to install to the correct path. If installed to an alternative path make sure to add this path to the windows environment variables (system and user)
 ***
 
 ## Build Commands
 ### Client
+
 Run the Vite server:
 ```
 cd client
@@ -50,21 +44,6 @@ uvicorn domain.api.main:app --reload
 The goal of the project is to create a gameplay bot, specifically for the game Flappy Bird.
 ***
 
-## MoSCoW
-#### Must Have
-- Game to autoplay
-- Way to get game output
-- Way to give game input
-- autoplay logic for the specific game
-#### Should Have
-- website to play on with embedded game
-#### Could Have
-- Bot auto trainer
-- Database to store training data or highscores
-#### Won't Have
-- Advanced machine learning
-- AI integration
-***
 
 ## Software Stack
 ### Frontend
@@ -81,25 +60,6 @@ The goal of the project is to create a gameplay bot, specifically for the game F
 - Database: Redis
 ***
 
-## Project Structure
-<!-- ![test image](architecture_diagram.png) -->
-<!-- <img src="architecture_diagram.png"  width="600" height="120"> -->
-<img src="uml_stack_diagram.png"  width="600" height="120">
-
-## Personal Learning Goals
-- Keeping track of issues and planning using the issue board in Gitlab
-- Defining a proper scope for the project, not too big, not too small
-***
-
-## Technical Learning Goals
-- Coding in Python
-- Pytest set-up
-- FastAPI set-up and usage
-- Redis set-up and usage
-- Vite set-up
-- Vue usage
-- Webflow usage
-***
 
 ## Resources
 - [Vite: Get started](https://vitejs.dev/guide/)
