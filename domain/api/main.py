@@ -2,10 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from domain.api.domain_test_input import TestClass
 from domain.source.flappy_working import FlappyBird
-# from domain.source.flappy_bird import FlappyBird
 
-
-#http://127.0.0.1:8000/docs#/
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -46,19 +43,6 @@ def get_testclass():
         date_score = [date_part_split[1], score_part]
         return_list.append(date_score)
     return return_list
-
-    # return_list = []
-    # for i in range(1, 12):
-    #     test = r.get(f'{i}')
-    #     test2 = ast.literal_eval(test)
-    #     return_list.append(test2)
-    # test3 = r.get('mykeytest')
-    # test4 = ast.literal_eval(test3)
-    # return_list.append(test4)
-    # print(return_list)
-    # return return_list
-    # p1 = TestClass()
-    # return p1.test_list_2
 
 @app.post("/api/items")
 def create_item(item: str):
